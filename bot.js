@@ -1,6 +1,13 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, REST, Routes, SlashCommandBuilder } = require('discord.js');
 
+const token = process.env.TOKEN || process.env.DISCORD_TOKEN;
+
+if (!token) {
+  console.error('Missing Discord token. Set TOKEN or DISCORD_TOKEN in Railway environment variables.');
+  process.exit(1);
+}
+
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
 });
@@ -47,7 +54,7 @@ client.once('ready', async () => {
       .toJSON()
   ];
 
-  const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+  const rest = new REST({ version: '10' }).setToken(token);
   await rest.put(
     Routes.applicationCommands(client.user.id),
     { body: commands }
@@ -80,4 +87,4 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-client.login(process.env.TOKEN);
+client.login(token);
