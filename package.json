@@ -1,6 +1,7 @@
 {
   "name": "Vision+",
   "version": "1.0.0",
+  "packageManager": "npm@10.8.2",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
